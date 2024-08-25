@@ -46,16 +46,18 @@ TextToSpeech::TextToSpeech()
     })
 {
   audio.pause(false);
-  auto voiceNum = RHVoice_get_number_of_voices(engine);
-  LOG("number of voices:", voiceNum);
-  auto voices = RHVoice_get_voice_profiles(engine);
-  for (auto i = 0U; i < voiceNum; ++i)
-    LOG(i, voices[i]);
 }
 
 TextToSpeech::~TextToSpeech()
 {
   RHVoice_delete_tts_engine(engine);
+}
+
+static auto trimWhite(std::string text)
+{
+  text.erase(0, text.find_first_not_of(" \t\r\n"));
+  text.erase(text.find_last_not_of(" \t\r\n") + 1);
+  return text;
 }
 
 auto TextToSpeech::operator()(std::string text, bool blocking) const -> void
@@ -64,7 +66,7 @@ auto TextToSpeech::operator()(std::string text, bool blocking) const -> void
   auto tmp = std::string{};
 
   auto tts = [&]() {
-    LOG(tmp);
+    LOG(trimWhite(tmp));
     RHVoice_synth_params params;
     params.voice_profile = "Slt";
     /* The values must be between -1 and 1. */
