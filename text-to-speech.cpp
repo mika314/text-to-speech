@@ -62,6 +62,7 @@ static auto trimWhite(std::string text)
 
 auto TextToSpeech::operator()(std::string text, bool blocking) const -> void
 {
+  text = trimWhite(text);
   auto endSentenceChar = false;
   auto tmp = std::string{};
 
