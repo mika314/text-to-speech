@@ -66,7 +66,6 @@ auto TextToSpeech::operator()(std::string text, bool blocking) const -> void
   auto tmp = std::string{};
 
   auto tts = [&]() {
-    LOG(trimWhite(tmp));
     RHVoice_synth_params params;
     params.voice_profile = "Slt";
     /* The values must be between -1 and 1. */
