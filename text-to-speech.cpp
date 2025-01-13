@@ -72,7 +72,7 @@ auto TextToSpeech::operator()(std::string text, bool blocking) const -> void
     /* The values must be between -1 and 1. */
     /*     They are normalized this way, because users can set different */
     /* parameters for different voices in the configuration file. */
-    params.absolute_rate = .9f;
+    params.absolute_rate = in.rate;
     params.absolute_pitch = 0.;
     params.absolute_volume = 1.;
     /* Relative values, in case someone needs them. */
@@ -98,7 +98,7 @@ auto TextToSpeech::operator()(std::string text, bool blocking) const -> void
     audio.unlock();
   };
 
-  for (auto ch : text)
+  for (auto ch : in.msg)
   {
     tmp.push_back(ch);
     if (tmp.size() < 100)
@@ -112,7 +112,7 @@ auto TextToSpeech::operator()(std::string text, bool blocking) const -> void
   }
   tts();
 
-  if (!blocking)
+  if (!in.blocking)
     return;
   join();
 }

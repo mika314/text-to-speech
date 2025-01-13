@@ -9,7 +9,13 @@ class TextToSpeech
 {
 public:
   static auto inst() -> TextToSpeech &;
-  auto operator()(std::string msg, bool blocking = true) const -> void;
+  struct In
+  {
+    std::string msg;
+    bool blocking = true;
+    float rate = 0.0f;
+  };
+  auto operator()(In) const -> void;
   auto join() const -> void;
 
 private:
