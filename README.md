@@ -5,5 +5,5 @@
 
 // ...
 
-TextToSpeech::inst()("Hello world!");
+TextToSpeech::inst()({.msg = "Hello world!"});
 ```
